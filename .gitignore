@@ -1,7 +1,16 @@
-# ===== 敏感配置 =====
+# ===== 敏感配置：真实密钥与密码，一律不入库 =====
 .env
-*.env
+.env.*
 !.env.example
+*.env
+# 各类密钥、证书与本地凭据文件
+*.pem
+*.key
+*.p12
+*.pfx
+secrets.*
+credentials.*
+config.local.*
 
 # ===== Python =====
 __pycache__/
@@ -15,8 +24,16 @@ data/
 !data/candidates.sample.csv
 !data/positions.sample.csv
 
-# ===== 界面截图（体积大，且可能露出候选人姓名）=====
+# ===== 数据库转储（可能含候选人资料与账号哈希）=====
+*.dump
+*.sql.gz
+backup/
+
+# ===== 界面截图与录屏（体积大，且可能露出候选人姓名）=====
 tools/shots/
+*.mp4
+*.mov
+*.avi
 
 # ===== IDE 与本机配置 =====
 .idea/
