@@ -48,3 +48,8 @@ Thumbs.db
 
 # 本地密钥备份（勿入库）
 .env.bak.*
+
+# ===== 文档目录（README 引用的演示视频放行）=====
+# 其余 mp4 默认忽略，仅 docs/demo.mp4 入库
+*.mp4
+!docs/demo.mp4
