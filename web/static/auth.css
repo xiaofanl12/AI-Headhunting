@@ -1,0 +1,211 @@
+:root {
+  --brand: #1e90ff;
+  --brand-2: #5eb0ff;
+  --brand-soft: #eef6ff;
+  --text-1: #101633;
+  --text-2: #4a5470;
+  --text-3: #8a93ab;
+  --line: #e6e9f4;
+  --card: #fff;
+  --bg: #f5f6fc;
+  --danger: #e5484d;
+  --ok: #12a06a;
+  --radius: 20px;
+  --ease: cubic-bezier(.2, .8, .2, 1);
+}
+
+* { box-sizing: border-box; }
+
+html, body { height: 100%; margin: 0; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  color: var(--text-1);
+  background: #1d2350;
+  -webkit-font-smoothing: antialiased;
+}
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px;
+  margin: -1px; overflow: hidden; clip: rect(0 0 0 0);
+}
+
+/* ---------------- 全屏照片背景 ---------------- */
+.auth-bg {
+  position: fixed; inset: 0; z-index: 0;
+  background: url("/assets/img/login-bg.png") center / cover no-repeat;
+}
+/* 轻压暗 + 品牌色晕，保证白色卡片与文字可读，又保留照片氛围 */
+.auth-bg-tint {
+  position: absolute; inset: 0;
+  background:
+    linear-gradient(115deg, rgba(38, 38, 120, .55) 0%, rgba(58, 46, 140, .32) 45%, rgba(30, 30, 80, .55) 100%);
+  backdrop-filter: blur(2px);
+}
+
+/* 背景标语（开源可商用字体：Ma Shan Zheng，SIL OFL 许可） */
+@font-face {
+  font-family: "SloganKai";
+  src: url("/assets/fonts/slogan.woff2") format("woff2");
+  font-display: swap;
+}
+.slogan-overlay {
+  position: absolute; left: 0; right: 0; top: 7.5%;
+  text-align: center;
+  font-family: "SloganKai", "STKaiti", "KaiTi", serif;
+  font-size: clamp(26px, 3.4vw, 42px);
+  letter-spacing: 5px;
+  color: rgba(255, 255, 255, .96);
+  text-shadow: 0 2px 18px rgba(20, 20, 80, .55), 0 1px 3px rgba(20, 20, 80, .4);
+  pointer-events: none;
+  animation: rise 1s .15s var(--ease) both;
+}
+
+/* ---------------- 居中卡片 ---------------- */
+.auth-center {
+  position: relative; z-index: 1;
+  min-height: 100vh;
+  display: grid; place-items: center;
+  padding: 32px 20px;
+}
+
+.auth-card {
+  width: min(420px, calc(100vw - 32px));
+  background: rgba(255, 255, 255, .93);
+  backdrop-filter: blur(18px) saturate(1.25);
+  border: 1px solid rgba(255, 255, 255, .6);
+  border-radius: var(--radius);
+  box-shadow: 0 24px 70px rgba(15, 18, 60, .4);
+  padding: 30px 34px 26px;
+  animation: rise .6s var(--ease) both;
+}
+
+@keyframes rise { from { opacity: 0; transform: translateY(16px) scale(.985); } to { opacity: 1; transform: none; } }
+
+/* 品牌（原始横向布局，整体居中） */
+.brand-row {
+  display: flex; align-items: center; justify-content: center;
+  gap: 12px; text-align: left;
+}
+.brand-logo {
+  width: 46px; height: 46px; border-radius: 14px; flex: none;
+  display: grid; place-items: center;
+  font-weight: 750; font-size: 17px; color: #fff;
+  background: linear-gradient(135deg, var(--brand), var(--brand-2));
+  box-shadow: 0 6px 16px rgba(30, 144, 255, .32);
+}
+.brand-text { min-width: 0; }
+.brand-text b { display: block; font-size: 16px; letter-spacing: .2px; }
+.brand-text span { display: block; font-size: 11px; color: var(--text-3); margin-top: 2px; }
+
+/* 页面标题：登录 / 注册（居中） */
+.form-title {
+  margin: 20px 0 16px;
+  font-size: 21px; font-weight: 700; letter-spacing: .5px;
+  color: var(--text-1);
+  text-align: center;
+}
+
+/* 表单 */
+.field { display: block; margin-bottom: 14px; }
+.field > span { display: block; font-size: 12px; font-weight: 600; color: var(--text-2); margin-bottom: 6px; }
+.field[hidden] { display: none; }
+
+.input-wrap {
+  position: relative;
+  display: flex; align-items: center;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: #fbfbfe;
+  transition: border-color .18s var(--ease), box-shadow .18s var(--ease), background .18s var(--ease);
+}
+.input-wrap:focus-within {
+  background: #fff;
+  border-color: var(--brand);
+  box-shadow: 0 0 0 4px rgba(30, 144, 255, .16);
+}
+.input-wrap > svg {
+  width: 16px; height: 16px; flex: none; margin: 0 10px 0 13px;
+  fill: none; stroke: var(--text-3); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round;
+}
+.input-wrap:focus-within > svg { stroke: var(--brand); }
+.input-wrap input {
+  flex: 1; min-width: 0;
+  border: none; background: none; outline: none;
+  padding: 12px 12px 12px 0;
+  font: inherit; font-size: 13.5px; color: var(--text-1);
+}
+.input-wrap input::placeholder { color: #b3bacd; }
+
+/* 隐藏 Edge/Chrome 自带的密码显隐小眼睛，避免与自定义 .eye 按钮重复 */
+input::-ms-reveal,
+input::-ms-clear,
+.input-wrap input::-ms-reveal,
+.input-wrap input::-ms-clear {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+.eye {
+  border: none; background: none; cursor: pointer;
+  padding: 8px 12px; display: grid; place-items: center;
+}
+.eye svg { width: 16px; height: 16px; fill: none; stroke: var(--text-3); stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+.eye:hover svg { stroke: var(--brand); }
+
+/* 记住密码 */
+.remember {
+  display: flex; align-items: center; gap: 7px;
+  margin: -2px 0 14px;
+  font-size: 12.5px; color: var(--text-2); cursor: pointer;
+  user-select: none;
+}
+.remember input {
+  width: 15px; height: 15px; margin: 0;
+  accent-color: var(--brand); cursor: pointer;
+}
+.remember[hidden] { display: none; }
+
+.meter { display: flex; gap: 5px; margin: -6px 0 14px; }
+.meter i { height: 4px; flex: 1; border-radius: 999px; background: var(--line); transition: background .2s var(--ease); }
+.meter.s1 i:nth-child(1) { background: #f87171; }
+.meter.s2 i:nth-child(-n+2) { background: #fbbf24; }
+.meter.s3 i { background: #22c55e; }
+.meter[hidden] { display: none; }
+
+.form-note {
+  display: flex; align-items: flex-start; gap: 7px;
+  padding: 10px 12px; margin-bottom: 14px;
+  border-radius: 10px; font-size: 12.5px;
+  background: #fef2f2; color: #b42318; border: 1px solid #fecaca;
+}
+.form-note.ok { background: #ecfdf5; color: #047857; border-color: #a7f3d0; }
+.form-note[hidden] { display: none; }
+
+.submit {
+  width: 100%; height: 44px;
+  display: flex; align-items: center; justify-content: center;
+  border: none; border-radius: 12px; cursor: pointer;
+  font: inherit; font-size: 14px; font-weight: 650; color: #fff;
+  background: linear-gradient(135deg, var(--brand), var(--brand-2));
+  box-shadow: 0 8px 20px rgba(30, 144, 255, .32);
+  transition: transform .16s var(--ease), box-shadow .16s var(--ease), opacity .16s var(--ease);
+}
+.submit:hover { transform: translateY(-1px); box-shadow: 0 12px 26px rgba(30, 144, 255, .32); }
+.submit:active { transform: translateY(0); }
+.submit:disabled { opacity: .65; cursor: not-allowed; transform: none; }
+
+.alt-login { margin-top: 16px; text-align: center; font-size: 12.5px; color: var(--text-3); }
+.link {
+  border: none; background: none; cursor: pointer; padding: 0 2px;
+  font: inherit; font-size: 12.5px; font-weight: 650; color: var(--brand);
+}
+.link:hover { text-decoration: underline; }
+.alt-login[hidden] { display: none; }
+
+/* ---------------- 响应式 ---------------- */
+@media (max-width: 520px) {
+  .auth-card { padding: 24px 22px 20px; }
+  .brand-slogan { font-size: 14.5px; }
+}

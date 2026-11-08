@@ -1,0 +1,30 @@
+# ===== 敏感配置 =====
+.env
+*.env
+!.env.example
+
+# ===== Python =====
+__pycache__/
+*.py[cod]
+.pytest_cache/
+venv/
+.venv/
+
+# ===== 数据与个人信息（导出/备份含真实联系方式，一律不入库）=====
+data/
+!data/candidates.sample.csv
+!data/positions.sample.csv
+
+# ===== 界面截图（体积大，且可能露出候选人姓名）=====
+tools/shots/
+
+# ===== IDE 与本机配置 =====
+.idea/
+.vscode/
+*.iml
+.DS_Store
+Thumbs.db
+
+# ===== 日志与临时文件 =====
+*.log
+*.tmp
